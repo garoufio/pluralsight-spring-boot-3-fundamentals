@@ -2,6 +2,7 @@ package com.pluralsight.springboot3fundamentals.service;
 
 import com.pluralsight.springboot3fundamentals.entity.Registration;
 import com.pluralsight.springboot3fundamentals.repository.RegistrationRepository;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,6 +19,8 @@ public class RegistrationController {
 
   private final RegistrationRepository registrationRepository;
 
+  //--------------------------------------------------------------------------------------------------------------------
+
   public RegistrationController(RegistrationRepository registrationRepository) {
     this.registrationRepository = registrationRepository;
   }
@@ -25,7 +28,7 @@ public class RegistrationController {
   //--------------------------------------------------------------------------------------------------------------------
 
   @PostMapping
-  public Registration create(@RequestBody Registration registration) {
+  public Registration create(@RequestBody @Valid Registration registration) {
     return registrationRepository.create(registration);
   }
 
@@ -36,7 +39,7 @@ public class RegistrationController {
     return registrationRepository.
       findByTicketCode(ticketCode).
       orElseThrow(
-        () -> new NoSuchElementException("Registration with ticket code " + ticketCode + " not found")
+        () -> new NoSuchElementException(String.format("Registration with ticket code '%s' not found", ticketCode))
       );
   }
 

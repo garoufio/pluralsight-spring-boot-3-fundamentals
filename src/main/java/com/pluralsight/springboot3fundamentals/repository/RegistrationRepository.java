@@ -49,7 +49,7 @@ public class RegistrationRepository {
       registrationsByTicketCode.put(ticketCode, saved);
       return saved;
     } else {
-      throw new NoSuchElementException("Registration with ticket code " + ticketCode + " not found");
+      throw new NoSuchElementException(String.format("Registration with ticket code '%s' not found", ticketCode));
     }
   }
 
